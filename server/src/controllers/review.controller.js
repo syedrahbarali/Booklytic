@@ -4,12 +4,15 @@ const Book = require("../models/book.model");
 // Get reviews for a book
 exports.getReviews = async (req, res) => {
   try {
+    console.log(req.query.bookId);
     const bookId = req.query.bookId;
+
     if (!bookId)
       return res.status(400).json({ message: "Book ID is required" });
 
-    const reviews = await Review.find({ bookId: bookId })
+    const reviews = await Review.find({ bookId })
       .populate("bookId")
+      .populate("userId")
       .sort({ createdAt: -1 });
 
     console.log(reviews);
@@ -30,7 +33,7 @@ exports.getReviews = async (req, res) => {
 // Submit a new review
 exports.createReview = async (req, res) => {
   try {
-    const book = await Book.findById(req.body.bookId);
+    const book = await Book.findById(req.params.id);
     if (!book) return res.status(404).json({ message: "Book not found" });
 
     const review = new Review({

@@ -6,6 +6,7 @@ const {
   createBook,
 } = require("../controllers/book.controller.js");
 const auth = require("../middlewares/auth.middleware.js");
+
 const admin = require("../middlewares/admin.middleware.js");
 
 router.get("/", getAllBooks);

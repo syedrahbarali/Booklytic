@@ -7,6 +7,6 @@ const {
 const auth = require("../middlewares/auth.middleware");
 
 router.get("/", getReviews);
-router.post("/", auth, createReview);
+router.post("/:id", auth, createReview);
 
 module.exports = router;

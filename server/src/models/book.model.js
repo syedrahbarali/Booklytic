@@ -19,6 +19,10 @@ const BookSchema = new mongoose.Schema({
     type: String,
     unique: true,
   },
+  genre: {
+    type: String,
+    required: true,
+  },
   addedBy: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",

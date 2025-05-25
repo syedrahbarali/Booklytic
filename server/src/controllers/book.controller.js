@@ -15,7 +15,7 @@ exports.getAllBooks = async (req, res) => {
 
     const total = await Book.countDocuments();
 
-    res.json({
+    res.status(200).json({
       books,
       total,
       pages: Math.ceil(total / limit),
@@ -29,9 +29,10 @@ exports.getAllBooks = async (req, res) => {
 // Get a specific book
 exports.getBookById = async (req, res) => {
   try {
-    const book = await Book.findById(req.params.id);
+    const book = await Book.findById(req.params.id).populate("addedBy");
     if (!book) return res.status(404).json({ message: "Book not found" });
-    res.json({ message: "Book found", book, ok: true });
+
+    return res.status(200).json({ message: "Book found", book, ok: true });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
@@ -47,6 +48,7 @@ exports.createBook = async (req, res) => {
       publishedYear: req.body.publishedYear,
       isbn: req.body.isbn,
       addedBy: req.body._id,
+      genre: req.body.genre,
     });
 
     const newBook = await book.save();
