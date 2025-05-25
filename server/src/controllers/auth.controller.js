@@ -41,9 +41,10 @@ exports.loginUser = async (req, res) => {
       maxAge: 24 * 60 * 60 * 1000,
       httpOnly: true,
       secure: true,
+      sameSite: "None",
     });
 
-    return res.status(201).json({ message: "Login Success", ok: true });
+    return res.status(201).json({ message: "Login Success", token, ok: true });
   } catch (err) {
     return res.status(500).json({ message: err.message });
   }

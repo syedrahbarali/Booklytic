@@ -1,15 +1,14 @@
 import React from "react";
 import useFetchBooks from "../hooks/useFetchBooks";
-import {Link} from 'react-router-dom'
+import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 
-
 // const genres = [
-//   "All Genres", "Fiction", "Non-Fiction", "Fantasy", "Science Fiction", 
+//   "All Genres", "Fiction", "Non-Fiction", "Fantasy", "Science Fiction",
 //   "Mystery", "Romance", "Biography", "History", "Self-Help"
 // ];
 
-const genres=[]
+const genres = [];
 // const testimonials = [
 //   {
 //     name: "Sarah Johnson",
@@ -27,25 +26,20 @@ const genres=[]
 //     avatar: "👩‍👧"
 //   }
 // ];
-const testimonials=[];
+const testimonials = [];
 
-
-const BookReviewPage = ()=> {
-  const { 
-    books, 
-    loading, 
-    error, 
-    filter, 
-    setFilter 
-  } = useFetchBooks(); 
-  const featuredBooks = books
+const BookReviewPage = () => {
+  const { books, loading, error, filter, setFilter } = useFetchBooks();
+  const featuredBooks = books;
   const [activeGenre, setActiveGenre] = React.useState("All Genres");
   const [searchQuery, setSearchQuery] = React.useState("");
 
-  const filteredBooks = featuredBooks.filter(book => {
-    const matchesGenre = activeGenre === "All Genres" || book.genre === activeGenre;
-    const matchesSearch = book.title.toLowerCase().includes(searchQuery.toLowerCase()) || 
-                         book.author.toLowerCase().includes(searchQuery.toLowerCase());
+  const filteredBooks = featuredBooks.filter((book) => {
+    const matchesGenre =
+      activeGenre === "All Genres" || book.genre === activeGenre;
+    const matchesSearch =
+      book.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      book.author.toLowerCase().includes(searchQuery.toLowerCase());
     return matchesGenre && matchesSearch;
   });
 
@@ -59,20 +53,22 @@ const BookReviewPage = ()=> {
           className="text-5xl md:text-6xl font-extrabold text-indigo-800 drop-shadow-md mb-4"
         >
           <span className="bg-gradient-to-r from-indigo-600 to-purple-600 text-transparent bg-clip-text">
-            📚 Booklytic    
+            📚 Booklytic
           </span>
         </motion.h1>
+
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.4, duration: 0.8 }}
           className="text-xl mt-2 text-indigo-600 max-w-2xl mx-auto"
         >
-          Your cozy corner to explore, review, and discuss books with fellow bibliophiles
+          Your cozy corner to explore, review, and discuss books with fellow
+          bibliophiles
         </motion.p>
       </header>
 
-      <motion.section 
+      <motion.section
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.6 }}
@@ -100,7 +96,11 @@ const BookReviewPage = ()=> {
               <button
                 key={genre}
                 onClick={() => setActiveGenre(genre)}
-                className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${activeGenre === genre ? 'bg-indigo-600 text-white shadow-md' : 'bg-indigo-100 text-indigo-700 hover:bg-indigo-200'}`}
+                className={`px-4 py-2 rounded-full text-sm font-medium transition-all ${
+                  activeGenre === genre
+                    ? "bg-indigo-600 text-white shadow-md"
+                    : "bg-indigo-100 text-indigo-700 hover:bg-indigo-200"
+                }`}
               >
                 {genre}
               </button>
@@ -109,8 +109,9 @@ const BookReviewPage = ()=> {
         </div>
 
         <h2 className="text-3xl font-bold text-indigo-800 mb-6 flex items-center">
-          <span className="mr-2">🌟</span> {activeGenre === "All Genres" ? "Featured Books" : activeGenre}
-        </h2>   
+          <span className="mr-2">🌟</span>{" "}
+          {activeGenre === "All Genres" ? "Featured Books" : activeGenre}
+        </h2>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {filteredBooks.map((book, i) => (
@@ -123,17 +124,37 @@ const BookReviewPage = ()=> {
               className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300"
             >
               <div className="bg-gradient-to-r from-indigo-100 to-purple-100 p-6 text-center">
-                <span className="text-8xl block mb-4">{book.cover || ["📚", "📖", "📗", "📘", "📙", "📚","📚", "📖", "📗", "📘", "📙", "📚"][i]}</span>
+                <span className="text-8xl block mb-4">
+                  {book.cover ||
+                    [
+                      "📚",
+                      "📖",
+                      "📗",
+                      "📘",
+                      "📙",
+                      "📚",
+                      "📚",
+                      "📖",
+                      "📗",
+                      "📘",
+                      "📙",
+                      "📚",
+                    ][i]}
+                </span>
               </div>
               <div className="p-5">
                 <div className="flex justify-between items-start mb-2">
-                  <h3 className="text-xl font-bold text-indigo-800">{book.title}</h3>
+                  <h3 className="text-xl font-bold text-indigo-800">
+                    {book.title}
+                  </h3>
                   <span className="bg-indigo-100 text-indigo-800 text-xs px-2 py-1 rounded-full">
                     {book.genre}
                   </span>
                 </div>
                 <p className="text-indigo-600 mb-3">by {book.author}</p>
-                <p className="text-gray-600 text-sm mb-4 line-clamp-3">{book.description}</p>
+                <p className="text-gray-600 text-sm mb-4 line-clamp-3">
+                  {book.description}
+                </p>
                 <div className="flex items-center justify-between">
                   {/* <div className="flex items-center">
                     <span className="text-yellow-500 text-lg mr-1">
@@ -144,7 +165,10 @@ const BookReviewPage = ()=> {
                       ({book.rating.toFixed(1)})
                     </span>
                   </div> */}
-                  <Link to={`/book/${book._id}`} className="bg-indigo-600 text-white px-4 py-2 rounded-full text-sm hover:bg-indigo-700 transition-colors flex items-center">
+                  <Link
+                    to={`/book/${book._id}`}
+                    className="bg-indigo-600 text-white px-4 py-2 rounded-full text-sm hover:bg-indigo-700 transition-colors flex items-center"
+                  >
                     Read Review
                     <span className="ml-1">→</span>
                   </Link>
@@ -171,12 +195,12 @@ const BookReviewPage = ()=> {
             >
               <div className="flex items-center mb-4">
                 <span className="text-3xl mr-3">{testimonial.avatar}</span>
-                <h4 className="font-bold text-indigo-700">{testimonial.name}</h4>
+                <h4 className="font-bold text-indigo-700">
+                  {testimonial.name}
+                </h4>
               </div>
               <p className="text-gray-600 italic">"{testimonial.comment}"</p>
-              <div className="mt-4 flex">
-                {"⭐".repeat(5)}
-              </div>
+              <div className="mt-4 flex">{"⭐".repeat(5)}</div>
             </motion.div>
           ))}
         </div>
@@ -193,7 +217,8 @@ const BookReviewPage = ()=> {
             <span className="mr-3">📬</span> Join Our Reading Community
           </h2>
           <p className="mb-6 text-indigo-100 max-w-2xl mx-auto">
-            Get weekly book recommendations, exclusive reviews, and join our vibrant community of book lovers.
+            Get weekly book recommendations, exclusive reviews, and join our
+            vibrant community of book lovers.
           </p>
           <div className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
             <input
@@ -216,23 +241,37 @@ const BookReviewPage = ()=> {
           className="bg-white p-6 rounded-xl shadow-sm"
         >
           <div className="flex justify-center space-x-6 mb-4">
-            <a href="#" className="text-2xl hover:text-indigo-500">📱</a>
-            <a href="#" className="text-2xl hover:text-indigo-500">🐦</a>
-            <a href="#" className="text-2xl hover:text-indigo-500">📷</a>
-            <a href="#" className="text-2xl hover:text-indigo-500">📘</a>
+            <a href="#" className="text-2xl hover:text-indigo-500">
+              📱
+            </a>
+            <a href="#" className="text-2xl hover:text-indigo-500">
+              🐦
+            </a>
+            <a href="#" className="text-2xl hover:text-indigo-500">
+              📷
+            </a>
+            <a href="#" className="text-2xl hover:text-indigo-500">
+              📘
+            </a>
           </div>
-          <p className="mb-2">
-            © 2025 BookNest | Crafted with ❤️ by Rahbar
-          </p>
+          <p className="mb-2">© 2025 BookNest | Crafted with ❤️ by Rahbar</p>
           <div className="flex justify-center space-x-4 text-sm">
-            <a href="#" className="hover:text-indigo-900">About</a>
-            <a href="#" className="hover:text-indigo-900">Privacy</a>
-            <a href="#" className="hover:text-indigo-900">Terms</a>
-            <a href="#" className="hover:text-indigo-900">Contact</a>
+            <a href="#" className="hover:text-indigo-900">
+              About
+            </a>
+            <a href="#" className="hover:text-indigo-900">
+              Privacy
+            </a>
+            <a href="#" className="hover:text-indigo-900">
+              Terms
+            </a>
+            <a href="#" className="hover:text-indigo-900">
+              Contact
+            </a>
           </div>
         </motion.div>
       </footer>
     </div>
   );
-}
-export default BookReviewPage
+};
+export default BookReviewPage;

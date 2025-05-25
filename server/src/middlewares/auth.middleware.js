@@ -4,11 +4,7 @@ const User = require("../models/user.model");
 module.exports = async (req, res, next) => {
   try {
     console.log("Authentication Started");
-    const token =
-      req.cookies.accessToken ||
-      req.header("Authorization").replace("Bearer ", "");
-
-    console.log(token);
+    const token = req.cookies.accessToken;
 
     const decoded = jwt.verify(token, `${process.env.JWT_ACCESS_TOKEN_SECRET}`);
     const user = await User.findOne({ _id: decoded._id });
